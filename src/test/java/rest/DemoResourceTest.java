@@ -21,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-@Disabled
+//@Disabled
 class DemoResourceTest {
 
     private static final int SERVER_PORT = 7777;
