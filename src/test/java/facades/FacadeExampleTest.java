@@ -18,6 +18,7 @@ public class FacadeExampleTest {
     public FacadeExampleTest() {
     }
 
+
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
