@@ -92,6 +92,7 @@ public class ConventusResourcesFetcher {
                 }
                 Long timeStart = Long.parseLong(jsonElement.getAsJsonObject().get("start").getAsString());
                 //Date timeS = new Date(timeStart);
+                //TODO, ikke sikker på at den der tid duer når det skifter til sommertid
                 LocalDateTime startTime = LocalDateTime.ofEpochSecond(timeStart / 1000, 0, ZoneOffset.ofHours(1));
                 start = startTime.toString();
                 System.out.println(startTime);
