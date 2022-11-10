@@ -71,7 +71,7 @@ public class ConventusResourcesFetcher {
         //System.out.println("JSON Conventus BFF INFO: " + resourcesJSON);
         //organization.id eller name, og løbe igennem dem
         JsonArray json = JsonParser.parseString(resourcesJSON).getAsJsonArray();
-
+        int id = 1;
         for (JsonElement jsonElement : json) {
             String text = "";
             String start = "";
@@ -103,7 +103,9 @@ public class ConventusResourcesFetcher {
                 System.out.println(time);
             }
             if(text != "") {
-                ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO(text, start, end);
+
+                ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO("" + id, text, start, end);
+                id ++;
                 conventusResourceDTOList.add(conventusResourceDTO);
             }
         }
