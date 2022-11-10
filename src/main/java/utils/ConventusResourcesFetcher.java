@@ -102,11 +102,12 @@ public class ConventusResourcesFetcher {
                 end = time.toString();
                 System.out.println(time);
             }
-
-            ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO(text, start, end);
-            conventusResourceDTOList.add(conventusResourceDTO);
+            if(text != "") {
+                ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO(text, start, end);
+                conventusResourceDTOList.add(conventusResourceDTO);
+            }
         }
-
+        System.out.println(conventusResourceDTOList.toString());
 
         //JsonObject organization = json.get("organization").getAsJsonObject();
 

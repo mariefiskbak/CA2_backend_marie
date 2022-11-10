@@ -120,6 +120,7 @@ public class DemoResource {
     public String getBFFInfo() throws IOException, ExecutionException, InterruptedException {
         String query;
         List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo();
+        System.out.println(conventusResourceDTOList.toString());
 
         return GSON.toJson(conventusResourceDTOList);
     }
