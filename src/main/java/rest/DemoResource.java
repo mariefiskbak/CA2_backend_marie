@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dtos.ComboDTO;
+import dtos.ConventusResourceDTO;
 import dtos.PokemonDTO;
 import dtos.RandomFactDTO;
 import entities.User;
@@ -27,6 +28,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
+import facades.ConventusFacade;
 import facades.UserFacade;
 import utils.EMF_Creator;
 import utils.FactFetcher;
@@ -49,6 +51,7 @@ public class DemoResource {
     SecurityContext securityContext;
 
     private static final UserFacade FACADE = UserFacade.getUserFacade(EMF);
+    private static final ConventusFacade CONVENTUS_FACADE = ConventusFacade.getConventusFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @GET
@@ -107,6 +110,18 @@ public class DemoResource {
 //        } finally {
 //            em.close();
 //        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("calendar")
+//    @RolesAllowed({"user", "admin"})
+    public String getBFFInfo() throws IOException, ExecutionException, InterruptedException {
+        String query;
+        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo();
+
+        return GSON.toJson(conventusResourceDTOList);
     }
 
     @POST

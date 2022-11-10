@@ -24,3 +24,7 @@ Content-Type: application/json
 {
 "deckSize": "10"
 }
+
+###
+POST http://localhost:8080/CA2_backend_G_war_exploded/api/info/calendar
+Content-Type: application/json
