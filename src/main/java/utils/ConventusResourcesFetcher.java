@@ -94,12 +94,12 @@ public class ConventusResourcesFetcher {
                 //Date timeS = new Date(timeStart);
                 //TODO, ikke sikker på at den der tid duer når det skifter til sommertid
                 LocalDateTime startTime = LocalDateTime.ofEpochSecond(timeStart / 1000, 0, ZoneOffset.ofHours(1));
-                start = startTime.toString();
+                start = startTime.toString() +":00";
                 System.out.println(startTime);
                 Long timeEnd = Long.parseLong(jsonElement.getAsJsonObject().get("end").getAsString());
                 //TODO, ikke sikker på at den der tid duer når det skifter til sommertid
                 LocalDateTime time = LocalDateTime.ofEpochSecond(timeEnd / 1000, 0, ZoneOffset.ofHours(1));
-                end = time.toString();
+                end = time.toString() + ":00";
                 System.out.println(time);
             }
             if(text != "") {
