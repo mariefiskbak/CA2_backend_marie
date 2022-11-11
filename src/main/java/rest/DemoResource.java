@@ -118,9 +118,11 @@ public class DemoResource {
     @Path("calendar")
 //    @RolesAllowed({"user", "admin"})
     public String getBFFInfo(String selectedDate) throws IOException, ExecutionException, InterruptedException {
-        String query;
-        JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
-        query = json.get("value").getAsString();
+        String query = "";
+        if(selectedDate != null || selectedDate != "") {
+            JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
+            query = json.get("value").getAsString();
+        }
         List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(query);
         System.out.println(conventusResourceDTOList.toString());
 
