@@ -113,7 +113,7 @@ public class DemoResource {
 //        }
     }
 
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("calendar")
