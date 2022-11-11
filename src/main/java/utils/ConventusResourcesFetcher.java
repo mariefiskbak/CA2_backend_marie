@@ -65,10 +65,13 @@ public class ConventusResourcesFetcher {
         String resources = getResource();
         String onlyDate = selectedDate.substring(0,10);
         LocalDate date = LocalDate.parse(onlyDate);
+        String today = LocalDate.now().toString();
+        if(selectedDate.equals("") || selectedDate == null){
+            date = LocalDate.now();
+        }
         String startDate = date.minusDays(7).toString();
         String endDate = date.plusDays(7).toString();
         System.out.println(startDate + "-" + endDate);
-        String today = LocalDate.now().toString();
         System.out.println("today: " + today);
         String inOneWeek = LocalDate.now().plusDays(7).toString();
         System.out.println("in a week: " + inOneWeek);
