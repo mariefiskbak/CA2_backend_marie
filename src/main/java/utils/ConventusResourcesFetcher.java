@@ -69,8 +69,8 @@ public class ConventusResourcesFetcher {
 //        if(selectedDate.equals("") || selectedDate == null){
 //            date = LocalDate.now();
 //        }
-        String startDate = date.minusDays(7).toString();
-        String endDate = date.plusDays(7).toString();
+        String startDate = date.minusDays(365).toString();
+        String endDate = date.plusDays(365).toString();
 //        System.out.println(startDate + "-" + endDate);
 //        System.out.println("today: " + today);
 //        String inOneWeek = LocalDate.now().plusDays(7).toString();
