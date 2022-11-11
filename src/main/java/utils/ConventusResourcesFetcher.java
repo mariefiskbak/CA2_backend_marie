@@ -66,15 +66,15 @@ public class ConventusResourcesFetcher {
         String onlyDate = selectedDate.substring(0,10);
         LocalDate date = LocalDate.parse(onlyDate);
         String today = LocalDate.now().toString();
-        if(selectedDate.equals("") || selectedDate == null){
-            date = LocalDate.now();
-        }
+//        if(selectedDate.equals("") || selectedDate == null){
+//            date = LocalDate.now();
+//        }
         String startDate = date.minusDays(7).toString();
         String endDate = date.plusDays(7).toString();
-        System.out.println(startDate + "-" + endDate);
-        System.out.println("today: " + today);
-        String inOneWeek = LocalDate.now().plusDays(7).toString();
-        System.out.println("in a week: " + inOneWeek);
+//        System.out.println(startDate + "-" + endDate);
+//        System.out.println("today: " + today);
+//        String inOneWeek = LocalDate.now().plusDays(7).toString();
+//        System.out.println("in a week: " + inOneWeek);
         String resourcesJSON = HttpUtils.fetchData(String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", startDate, endDate, resources));
         //System.out.println("JSON Conventus BFF INFO: " + resourcesJSON);
         //organization.id eller name, og løbe igennem dem

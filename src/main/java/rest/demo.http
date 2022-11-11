@@ -29,4 +29,6 @@ Content-Type: application/json
 GET http://localhost:8080/CA2/api/info/calendar
 Content-Type: application/json
 
-  "2022-11-11"
+{
+
+}

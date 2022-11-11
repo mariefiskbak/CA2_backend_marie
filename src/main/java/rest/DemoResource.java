@@ -11,6 +11,7 @@ import dtos.RandomFactDTO;
 import entities.User;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -118,12 +119,12 @@ public class DemoResource {
     @Path("calendar")
 //    @RolesAllowed({"user", "admin"})
     public String getBFFInfo(String selectedDate) throws IOException, ExecutionException, InterruptedException {
-//        String query = "";
-//        if(selectedDate != null || selectedDate != "") {
-//            JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
-//            query = json.get("value").getAsString();
-//        }
-        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(selectedDate);
+        String query = LocalDate.now().toString();
+        if(selectedDate.contains("-")) {
+            JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
+            query = json.get("value").getAsString();
+        }
+        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(query);
         System.out.println(conventusResourceDTOList.toString());
 
         return GSON.toJson(conventusResourceDTOList);
