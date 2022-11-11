@@ -1,14 +1,10 @@
 package facades;
 
 import dtos.ConventusResourceDTO;
-import dtos.RenameMeDTO;
-import entities.RenameMe;
 import utils.ConventusResourcesFetcher;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,9 +33,9 @@ public class ConventusFacade {
         return emf.createEntityManager();
     }
 
-    public List<ConventusResourceDTO> getBFFInfo() throws IOException {
+    public List<ConventusResourceDTO> getBFFInfo(String query) throws IOException {
         ConventusResourcesFetcher conventusResourcesFetcher = new ConventusResourcesFetcher();
-        return conventusResourcesFetcher.getBFFInfo();
+        return conventusResourcesFetcher.getBFFInfo(query);
     }
 
 }

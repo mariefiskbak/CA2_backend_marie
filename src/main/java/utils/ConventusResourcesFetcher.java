@@ -60,14 +60,19 @@ public class ConventusResourcesFetcher {
         return resourceIdsString;
     }
 
-    public List<ConventusResourceDTO> getBFFInfo() throws IOException {
+    public List<ConventusResourceDTO> getBFFInfo(String selectedDate) throws IOException {
         List<ConventusResourceDTO> conventusResourceDTOList = new ArrayList<>();
         String resources = getResource();
+        String onlyDate = selectedDate.substring(0,10);
+        LocalDate date = LocalDate.parse(onlyDate);
+        String startDate = date.minusDays(7).toString();
+        String endDate = date.plusDays(7).toString();
+        System.out.println(startDate + "-" + endDate);
         String today = LocalDate.now().toString();
         System.out.println("today: " + today);
         String inOneWeek = LocalDate.now().plusDays(7).toString();
         System.out.println("in a week: " + inOneWeek);
-        String resourcesJSON = HttpUtils.fetchData(String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", today, inOneWeek, resources));
+        String resourcesJSON = HttpUtils.fetchData(String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", startDate, endDate, resources));
         //System.out.println("JSON Conventus BFF INFO: " + resourcesJSON);
         //organization.id eller name, og løbe igennem dem
         JsonArray json = JsonParser.parseString(resourcesJSON).getAsJsonArray();

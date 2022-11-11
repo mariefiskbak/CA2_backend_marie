@@ -86,7 +86,7 @@ public class FacadeExample {
         FacadeExample fe = getFacadeExample(emf);
         fe.getAll().forEach(dto->System.out.println(dto));
         ConventusResourcesFetcher conventusResourcesFetcher = new ConventusResourcesFetcher();
-        conventusResourcesFetcher.getBFFInfo();
+        conventusResourcesFetcher.getBFFInfo("2022-11-11T00:00:00");
     }
 
 }

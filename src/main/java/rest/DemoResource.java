@@ -117,9 +117,11 @@ public class DemoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("calendar")
 //    @RolesAllowed({"user", "admin"})
-    public String getBFFInfo() throws IOException, ExecutionException, InterruptedException {
+    public String getBFFInfo(String selectedDate) throws IOException, ExecutionException, InterruptedException {
         String query;
-        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo();
+        JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
+        query = json.get("value").getAsString();
+        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(query);
         System.out.println(conventusResourceDTOList.toString());
 
         return GSON.toJson(conventusResourceDTOList);
