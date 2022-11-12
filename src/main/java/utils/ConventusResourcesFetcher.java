@@ -96,7 +96,7 @@ public class ConventusResourcesFetcher {
                 try {
                     backColor = "#" + jsonElement.getAsJsonObject().get("category").getAsJsonObject().get("color").getAsString();
                 } catch (Exception e) {
-                    backColor = "#00FF00";
+                    backColor = "#007500";
                 }
 
                 Long timeStart = Long.parseLong(jsonElement.getAsJsonObject().get("start").getAsString());
