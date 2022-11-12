@@ -63,7 +63,7 @@ public class ConventusResourcesFetcher {
     public List<ConventusResourceDTO> getBFFInfo(String selectedDate) throws IOException {
         List<ConventusResourceDTO> conventusResourceDTOList = new ArrayList<>();
         String resources = getResource();
-        String onlyDate = selectedDate.substring(0,10);
+        String onlyDate = selectedDate.substring(0, 10);
         LocalDate date = LocalDate.parse(onlyDate);
         System.out.println("Valgte dag: " + date.toString());
 
@@ -78,6 +78,7 @@ public class ConventusResourcesFetcher {
             String text = "";
             String start = "";
             String end = "";
+            String backColor = "";
             //System.out.println("jsomElement: " + jsonElement);
             String organizationId = jsonElement.getAsJsonObject().get("organization").getAsJsonObject().get("id").getAsString();
             //Get object where organization.id = 13688
@@ -92,22 +93,30 @@ public class ConventusResourcesFetcher {
                     text = resourceName;
                     System.out.println(resourceName);
                 }
+                try {
+                    backColor = jsonElement.getAsJsonObject().get("category").getAsJsonObject().get("color").getAsString();
+                } catch (Exception e) {
+                    backColor = "00FF00";
+                }
+
                 Long timeStart = Long.parseLong(jsonElement.getAsJsonObject().get("start").getAsString());
                 //Date timeS = new Date(timeStart);
                 //TODO, ikke sikker på at den der tid duer når det skifter til sommertid
                 LocalDateTime startTime = LocalDateTime.ofEpochSecond(timeStart / 1000, 0, ZoneOffset.ofHours(1));
-                start = startTime.toString() +":00";
+                start = startTime.toString() + ":00";
                 System.out.println(startTime);
                 Long timeEnd = Long.parseLong(jsonElement.getAsJsonObject().get("end").getAsString());
                 //TODO, ikke sikker på at den der tid duer når det skifter til sommertid
                 LocalDateTime time = LocalDateTime.ofEpochSecond(timeEnd / 1000, 0, ZoneOffset.ofHours(1));
                 end = time.toString() + ":00";
                 System.out.println(time);
-            }
-            if(text != "") {
 
-                ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO("" + id, text, start, end);
-                id ++;
+                System.out.println(backColor);
+            }
+            if (text != "") {
+
+                ConventusResourceDTO conventusResourceDTO = new ConventusResourceDTO("" + id, text, start, end, backColor);
+                id++;
                 conventusResourceDTOList.add(conventusResourceDTO);
             }
         }
