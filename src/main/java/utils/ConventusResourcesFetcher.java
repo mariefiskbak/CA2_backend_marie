@@ -67,8 +67,8 @@ public class ConventusResourcesFetcher {
         LocalDate date = LocalDate.parse(onlyDate);
         System.out.println("Valgte dag: " + date.toString());
 
-        String startDate = date.minusDays(7).toString();
-        String endDate = date.plusDays(14).toString();
+        String startDate = date.minusDays(6).toString();
+        String endDate = date.plusDays(6).toString();
 
         String resourcesJSON = HttpUtils.fetchData(String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", startDate, endDate, resources));
 
