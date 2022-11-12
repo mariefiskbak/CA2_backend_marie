@@ -84,7 +84,7 @@ public class FacadeExample {
     public static void main(String[] args) throws IOException {
         emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = getFacadeExample(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
+        //fe.getAll().forEach(dto->System.out.println(dto));
         ConventusResourcesFetcher conventusResourcesFetcher = new ConventusResourcesFetcher();
         conventusResourcesFetcher.getBFFInfo("2022-11-11T00:00:00");
     }

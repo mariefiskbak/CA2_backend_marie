@@ -125,7 +125,6 @@ public class DemoResource {
             query = json.get("value").getAsString();
         }
         List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(query);
-        System.out.println(conventusResourceDTOList.toString());
 
         return GSON.toJson(conventusResourceDTOList);
     }
