@@ -124,7 +124,7 @@ public class DemoResource {
             JsonObject json = JsonParser.parseString(selectedDate).getAsJsonObject();
             query = json.get("value").getAsString();
         }
-        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfo(query);
+        List<ConventusResourceDTO> conventusResourceDTOList = CONVENTUS_FACADE.getBFFInfoParallel(query);
 
         return GSON.toJson(conventusResourceDTOList);
     }

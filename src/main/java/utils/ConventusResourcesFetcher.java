@@ -15,48 +15,43 @@ import java.util.Date;
 import java.util.List;
 
 public class ConventusResourcesFetcher {
+    private static long timeStart;
+    private static long firstFetchEnd;
 
-    //TODO, så skal den returnerede streng bygges ind i URLen til et andet fetch, sammen med dagens dato og en uge frem, eller lignende.
     public static String getResource() throws IOException {
+        timeStart = System.nanoTime();
+
         String resourcesJSON = HttpUtils.fetchData("https://www.conventus.dk/publicBooking/api/resources?organization=13688");
-        //SKal finde external, directories, resources, id
-        //System.out.println("JSON Conventus: " + resourcesJSON);
 
         JsonObject json = JsonParser.parseString(resourcesJSON).getAsJsonObject();
-        //System.out.println("parsed JSON: " + json.toString());
-
         StringBuilder resourceIds = new StringBuilder();
 
         JsonArray externals = json.get("external").getAsJsonArray();
-        //System.out.println("get parsed as string: " + externals.toString());
         for (JsonElement external : externals) {
             if (external.getAsJsonObject().has("directories")) {
                 JsonArray jArray = external.getAsJsonObject().get("directories").getAsJsonArray();
-                //System.out.println("jArray: " + jArray);
                 for (JsonElement jsonElement : jArray) {
                     JsonArray jArrayResources = jsonElement.getAsJsonObject().get("resources").getAsJsonArray();
-                    //          System.out.println("nested resources;: " + jArrayResources);
                     for (JsonElement jArrayResource : jArrayResources) {
                         String ids = jArrayResource.getAsJsonObject().get("id").getAsString();
                         resourceIds.append(ids);
                         resourceIds.append(";");
-                        //            System.out.println("IDs: " + ids);
                     }
                 }
             } else if (external.getAsJsonObject().has("resources")) {
                 JsonArray jArray = external.getAsJsonObject().get("resources").getAsJsonArray();
-                //System.out.println("jArrayResources: " + jArray);
                 for (JsonElement jsonElement : jArray) {
                     String ids = jsonElement.getAsJsonObject().get("id").getAsString();
                     resourceIds.append(ids);
                     resourceIds.append(";");
-                    //System.out.println("IDs: " + ids);
                 }
             }
         }
 
         String resourceIdsString = resourceIds.substring(0, resourceIds.length() - 1);
         //System.out.println(resourceIdsString);
+
+        firstFetchEnd = System.nanoTime();
         return resourceIdsString;
     }
 
@@ -70,9 +65,16 @@ public class ConventusResourcesFetcher {
         String startDate = date.minusDays(6).toString();
         String endDate = date.plusDays(6).toString();
 
-        String resourcesJSON = HttpUtils.fetchData(String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", startDate, endDate, resources));
-
+        long timeBeforeSecondFetch = System.nanoTime();
+        //Næsten al tiden bliver brugt her,
+        //Så hvis jeg skal bruge tråde, så skal kaldet deles op i mindre, som hver tråd tager sig af
+        String url = String.format("https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=%s&to=%s&resources=%s", startDate, endDate, resources);
+        String resourcesJSON = HttpUtils.fetchData(url);
+        System.out.println(url);
+        long timeJustSecondFetch = System.nanoTime();
         JsonArray json = JsonParser.parseString(resourcesJSON).getAsJsonArray();
+        long timeAfterSecondFetchAndParse = System.nanoTime();
+
         int id = 1;
         for (JsonElement jsonElement : json) {
             String text = "";
@@ -126,6 +128,21 @@ public class ConventusResourcesFetcher {
         //https://www.conventus.dk/publicBooking/api/bookings?organization=13688&from=2022-11-09&to=2022-11-16&resources=7070;7033;7208;7206;6925;27655
 
         // så skal jeg fiske resource.name resource.resourceGroup.title og start og end ud.
+        long timeEnd = System.nanoTime();
+        long firstFetch = (firstFetchEnd - timeStart) / 1_000_000;
+        System.out.println("Time to do first fetch: " + firstFetch + "ms.");
+
+        long beforeSecondFetch = (timeBeforeSecondFetch - timeStart) / 1_000_000;
+        System.out.println("Before second Fetch: " + beforeSecondFetch + "ms.");
+
+        long justSecondFecth = (timeJustSecondFetch - timeStart) / 1_000_000;
+        System.out.println("Just after second Fetch: " + justSecondFecth + "ms.");
+
+        long afterSecondFetch = (timeAfterSecondFetchAndParse - timeStart) / 1_000_000;
+        System.out.println("After second fetch and parse: " + afterSecondFetch + "ms.");
+
+        long total = (timeEnd - timeStart) / 1_000_000;
+        System.out.println("Total time: " + total + "ms.");
         return conventusResourceDTOList;
     }
 }

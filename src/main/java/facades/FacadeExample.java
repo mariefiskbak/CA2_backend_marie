@@ -5,12 +5,14 @@ import entities.RenameMe;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
 //import errorhandling.RenameMeNotFoundException;
 import utils.ConventusResourcesFetcher;
+import utils.ConventusResourcesParallelFetcher;
 import utils.EMF_Creator;
 
 /**
@@ -81,10 +83,12 @@ public class FacadeExample {
         return RenameMeDTO.getDtos(rms);
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = getFacadeExample(emf);
         //fe.getAll().forEach(dto->System.out.println(dto));
+        ConventusResourcesParallelFetcher conventusResourcesParallelFetcher = new ConventusResourcesParallelFetcher();
+        conventusResourcesParallelFetcher.getBFFInfo("2022-11-11T00:00:00");
         ConventusResourcesFetcher conventusResourcesFetcher = new ConventusResourcesFetcher();
         conventusResourcesFetcher.getBFFInfo("2022-11-11T00:00:00");
     }

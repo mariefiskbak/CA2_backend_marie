@@ -2,11 +2,13 @@ package facades;
 
 import dtos.ConventusResourceDTO;
 import utils.ConventusResourcesFetcher;
+import utils.ConventusResourcesParallelFetcher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ConventusFacade {
     private static facades.ConventusFacade instance;
@@ -36,6 +38,11 @@ public class ConventusFacade {
     public List<ConventusResourceDTO> getBFFInfo(String query) throws IOException {
         ConventusResourcesFetcher conventusResourcesFetcher = new ConventusResourcesFetcher();
         return conventusResourcesFetcher.getBFFInfo(query);
+    }
+
+    public List<ConventusResourceDTO> getBFFInfoParallel(String query) throws IOException, ExecutionException, InterruptedException {
+        ConventusResourcesParallelFetcher conventusResourcesFetcherParallel = new ConventusResourcesParallelFetcher();
+        return conventusResourcesFetcherParallel.getBFFInfo(query);
     }
 
 }
